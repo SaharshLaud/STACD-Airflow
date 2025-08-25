@@ -282,7 +282,6 @@ Enable detailed logging by adding to your DAG trigger configuration:
 {
   "execution_type": "fullexec",
   "debug": true,
-  ...
 }
 ```
 
@@ -294,6 +293,3 @@ This is a reference implementation of the STACD specification. For the complete 
 ***
 
 For questions and issues, please refer to the research paper for detailed technical information.
-[8](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/50540967/85246215-6569-41be-b172-714da06caaa5/stacd_algorithm_repo.yaml)
-[9](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/50540967/7b91a5c4-c42f-478b-a7aa-bd0912f9ea16/stacd_classes.py)
-[10](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/50540967/8f2b1c4c-f931-4231-9e85-180f51953976/stacd_dag.yaml)
