@@ -1,0 +1,142 @@
+# STACD DAG Definition - Version 2.0 with semantic change and new nodes
+
+- !DAG
+  id: "terrain_and_lulc_workflow"
+  name: "Terrain and LULC Processing"
+  version: "2.0" # CHANGED VERSION
+  description: "Workflow for processing terrain and LULC data with vectorization - v2.0"
+  params:
+    - region
+    - year
+    - model
+    - rainfall_threshold # NEW PARAM
+  alg_type_nodes:
+    - LULC_Algorithm
+    - Terrain_Algorithm
+    - LULC_Vectorization
+    - Terrain_Vectorization
+    - LULC_x_Terrain_Vectorization
+    - Rainfall_Analysis # NEW ALGO NODE
+  dataset_type_nodes:
+    - DEM
+    - Sentinel
+    - Model
+    - LULC_Raster
+    - Terrain_Raster
+    - LULC_Vector
+    - Terrain_Vector
+    - LULC_x_Terrain_Vector
+    - Precipitation_Data # NEW DATASET NODE
+
+# Dataset Type Definitions (keep existing ones, add new)
+- !Dataset_Type
+  id: "DEM"
+  name: "DEM"
+- !Dataset_Type
+  id: "COPERNICUS/S2_HARMONIZED"
+  name: "Sentinel"
+- !Dataset_Type
+  id: "IndiaSAT_CI"
+  name: "Model"
+- !Dataset_Type
+  id: "IndiaSAT_LULC_Raster"
+  name: "LULC_Raster"
+- !Dataset_Type
+  id: "CoRE_Terrain_Raster"
+  name: "Terrain_Raster"
+- !Dataset_Type
+  id: "IndiaSAT_LULC_Vector"
+  name: "LULC_Vector"
+- !Dataset_Type
+  id: "CoRE_Terrain_Vector"
+  name: "Terrain_Vector"
+- !Dataset_Type
+  id: "CoRE_LULCxTerrain_Vector"
+  name: "LULC_x_Terrain_Vector"
+- !Dataset_Type # NEW DATASET TYPE
+  id: "Precipitation_Data"
+  name: "Precipitation_Data"
+
+# Algorithm Type Definitions (keep existing ones, modify LULC_Algorithm, add Rainfall_Analysis)
+- !Algorithm_Type
+  id: "LULC_Algorithm"
+  name: "LULC_Algorithm"
+  inputs: ["region", "model", "year", "rainfall_threshold"] # ADDED rainfall_threshold input
+  params:
+    - name: "region"
+      type: "string"
+    - name: "model"
+      type: "string"
+    - name: "year"
+      type: "integer"
+    - name: "rainfall_threshold" # NEW PARAMETER
+      type: "float"
+  input_datasets:
+    - "COPERNICUS/S2_HARMONIZED"
+    - "IndiaSAT_CI"
+    - "Precipitation_Data" # ADDED NEW INPUT DATASET
+  outputs:
+    - "IndiaSAT_LULC_Raster"
+
+- !Algorithm_Type
+  id: "Terrain_Algorithm"
+  name: "Terrain_Algorithm"
+  inputs: ["region"]
+  params:
+    - name: "region"
+      type: "string"
+  input_datasets:
+    - "DEM"
+  outputs:
+    - "CoRE_Terrain_Raster"
+
+- !Algorithm_Type
+  id: "LULC_Vectorization"
+  name: "LULC_Vectorization"
+  inputs: ["region"]
+  params:
+    - name: "region"
+      type: "string"
+  input_datasets:
+    - "IndiaSAT_LULC_Raster"
+  outputs:
+    - "IndiaSAT_LULC_Vector"
+
+- !Algorithm_Type
+  id: "Terrain_Vectorization"
+  name: "Terrain_Vectorization"
+  inputs: ["region"]
+  params:
+    - name: "region"
+      type: "string"
+  input_datasets:
+    - "CoRE_Terrain_Raster"
+  outputs:
+    - "CoRE_Terrain_Vector"
+
+- !Algorithm_Type
+  id: "LULC_x_Terrain_Vectorization"
+  name: "LULC_x_Terrain_Vectorization"
+  inputs: ["region"]
+  params:
+    - name: "region"
+      type: "string"
+  input_datasets:
+    - "IndiaSAT_LULC_Raster"
+    - "CoRE_Terrain_Raster"
+  outputs:
+    - "CoRE_LULCxTerrain_Vector"
+
+- !Algorithm_Type # NEW ALGORITHM TYPE
+  id: "Rainfall_Analysis"
+  name: "Rainfall_Analysis"
+  inputs: ["region", "year"]
+  params:
+    - name: "region"
+      type: "string"
+    - name: "year"
+      type: "integer"
+  input_datasets:
+    - "COPERNICUS/S2_HARMONIZED" # Example input, could be anything relevant
+  outputs:
+    - "Precipitation_Data"

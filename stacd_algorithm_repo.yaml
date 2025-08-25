@@ -1,0 +1,40 @@
+# STACD Algorithm Instance Repository
+- !Algorithm_Instance
+  version: "1"
+  type: "LULC_Algorithm"
+  assets:
+    code: "https://github.com/geo-algs/lulc-v1"
+    documentation: "docs/LULC_Algorithm.md"
+  date: 2024-01-15 00:00:00
+
+- !Algorithm_Instance
+  version: "1"
+  type: "Terrain_Algorithm"
+  assets:
+    code: "https://github.com/geo-algs/terrain-v1"
+    documentation: "docs/Terrain_Algorithm.md"
+  date: 2024-01-15 00:00:00
+
+- !Algorithm_Instance
+  version: "1"
+  type: "LULC_Vectorization"
+  assets:
+    code: "https://github.com/geo-algs/lulc-vec-v1"
+    documentation: "docs/LULC_Vectorization.md"
+  date: 2024-01-15 00:00:00
+
+- !Algorithm_Instance
+  version: "1"
+  type: "Terrain_Vectorization"
+  assets:
+    code: "https://github.com/geo-algs/terrain-vec-v1"
+    documentation: "docs/Terrain_Vectorization.md"
+  date: 2024-01-15 00:00:00
+
+- !Algorithm_Instance
+  version: "1"
+  type: "LULC_x_Terrain_Vectorization"
+  assets:
+    code: "https://github.com/geo-algs/combined-vec-v1"
+    documentation: "docs/LULC_x_Terrain_Vectorization.md"
+  date: 2024-01-15 00:00:00
